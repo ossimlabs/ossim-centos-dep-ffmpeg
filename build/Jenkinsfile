@@ -1,7 +1,6 @@
 properties([
     parameters ([
         string(name: 'DOCKER_REGISTRY_DOWNLOAD_URL', defaultValue: 'nexus-docker-private-group.ossim.io', description: 'Repository of docker images'),
-        string(name: 'BUILD_IMAGE', defaultValue: 'centos', description: 'Repository of docker images'),
         booleanParam(name: 'CLEAN_WORKSPACE', defaultValue: true, description: 'Clean the workspace at the end of the run')
     ]),
     pipelineTriggers([
@@ -15,7 +14,7 @@ podTemplate(
   containers: [
     containerTemplate(
       name: 'builder',
-      image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/ossim-deps-builder-${BUILD_IMAGE}:1.0",
+      image: "${DOCKER_REGISTRY_DOWNLOAD_URL}/ossim-deps-builder:1.0",
       ttyEnabled: true,
       command: 'cat',
       privileged: true
