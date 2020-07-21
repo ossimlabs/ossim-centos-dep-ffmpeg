@@ -63,9 +63,16 @@ node(POD_LABEL){
         {
             sh """
               ./build-x264.sh
-              ./build-ffmpeg.sh
+              tar -czvf centos-ffmpeg.tgz /usr/local
             """
         }
+    }
+    
+    stage("Publish"){
+        withCredentials([usernameColonPassword(credentialsId: 'nexusCredentials', variable: 'NEXUS_CREDENTIALS')])
+          {
+            sh "curl -v -u ${NEXUS_CREDENTIALS} --upload-file centos-ffmpeg.tgz https://nexus.ossim.io/repository/ossim-dependencies/"
+          }
     }
     
 	stage("Clean Workspace"){
