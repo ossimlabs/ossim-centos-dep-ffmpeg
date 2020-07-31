@@ -47,23 +47,14 @@ node(POD_LABEL){
         }
         load "common-variables.groovy"
     }
-    stage (" Checkout ffmpeg")
-    {
-        container('builder') 
-        {
-            sh """
-              ./checkout-x264.sh
-              ./checkout-ffmpeg.sh
-            """
-        }
-    }
     stage (" Build ffmpeg")
     {
         container('builder') 
         {
             sh """
               ./build-x264.sh
-              tar -czvf centos-ffmpeg.tgz /usr/local
+              cd /usr/local
+              tar -czvf centos-ffmpeg.tgz *
             """
         }
     }
