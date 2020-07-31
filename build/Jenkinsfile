@@ -47,7 +47,7 @@ node(POD_LABEL){
         }
         load "common-variables.groovy"
     }
-    stage (" Build ffmpeg")
+    stage ("Build ffmpeg")
     {
         container('builder') 
         {
@@ -59,11 +59,15 @@ node(POD_LABEL){
         }
     }
     
-    stage("Publish"){
-        withCredentials([usernameColonPassword(credentialsId: 'nexusCredentials', variable: 'NEXUS_CREDENTIALS')])
-          {
-            sh "curl -v -u ${NEXUS_CREDENTIALS} --upload-file centos-ffmpeg.tgz https://nexus.ossim.io/repository/ossim-dependencies/"
-          }
+    stage("Publish") {
+        withCredentials([usernameColonPassword(credentialsId: 'nexusCredentials', variable: 'NEXUS_CREDENTIALS')]) {
+              container('builder') {
+                  sh """
+                    cd /usr/local'
+                    curl -v -u ${NEXUS_CREDENTIALS} --upload-file centos-ffmpeg.tgz https://nexus.ossim.io/repository/ossim-dependencies/
+                  """
+            }
+        }
     }
     
 	stage("Clean Workspace"){
