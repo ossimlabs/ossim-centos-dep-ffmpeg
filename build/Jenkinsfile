@@ -53,6 +53,7 @@ node(POD_LABEL){
         {
             sh """
               ./build-x264.sh
+              ./build-ffmpeg.sh
               cd /usr/local
               tar -czvf centos-ffmpeg.tgz *
             """
