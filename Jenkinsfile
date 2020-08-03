@@ -64,7 +64,7 @@ node(POD_LABEL){
         withCredentials([usernameColonPassword(credentialsId: 'nexusCredentials', variable: 'NEXUS_CREDENTIALS')]) {
               container('builder') {
                   sh """
-                    cd /usr/local'
+                    cd /usr/local
                     curl -v -u ${NEXUS_CREDENTIALS} --upload-file centos-ffmpeg.tgz https://nexus.ossim.io/repository/ossim-dependencies/
                   """
             }
